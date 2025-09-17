@@ -6,3 +6,11 @@
 - Numpy
 - OpenCV
 - MatplotLib
+# Cómo usar
+## Primer paso: clonar este repositorio
+```bash
+    git clone "https://github.com/Javier-Castilla/VC-P1"
+```
+## Segundo paso: Activar tu envinroment e instalar dependencias
+> [!NOTE]
+> Todas las dependencias pueden verse en [este archivo]().
