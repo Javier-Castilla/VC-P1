@@ -14,6 +14,38 @@
 ## Segundo paso: Activar tu envinroment e instalar dependencias
 > [!NOTE]
 > Todas las dependencias pueden verse en [este archivo]().
+# Tarea 2: Imagen al estilo Mondrian
+Se ha generado una imagen al estilo Mondrian haciendo uso de las utilidades que presenta la biblioteca OpenCV.
+
+Concretamente, se ha tomado como referencia la siguiente imagen:
+
+<img src="https://www.descubrirelarte.es/wp-content/uploads/2020/11/Composicion-con-amarillo-rojo-negro-azul-y-gris-por-Piet-Mondrian-1920-oleo-sobre-lienzo-595-x-595-cm-La-Haya-Gemeentemuseum..jpg">
+
+La manera de proceder ha sido sencilla, se han guardado en una lista de python las distintas coordenadas necesarias para dibujar los distintos rectángulos que conforman la imagen. Junto a las coordenadas, se establece el color que tendrá cada rectángulo.
+
+Una vez guardadas las diferentes coordenadas y colores, se recorre la lista y se dibuja sobre una imagen generada inicialmente en blanco cada rectángulo de la siguiente manera:
+
+```python`
+for i, rectangle in enumerate(rectangles):
+    cv2.rectangle(img, rectangle[0], rectangle[1], rectangle[2], -1)
+    cv2.rectangle(img, rectangle[0], rectangle[1], (0, 0, 0), 5)
+``
+
+Posteriormente, se muestra la imagen y se guarda en disco de la siguiente manera:
+
+```python
+plt.imshow(img)
+plt.show()
+cv2.imwrite('imgs/mondrian.jpg', cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+```
+
+> [!NOTE]
+> Destacar que es necesario pasar la imagen a BGR antes de guardarla en disco haciendo uso de OpenCV para una correcta visualización posterior.
+
+La imagen resultante es la siguiente:
+
+<img src=imgs/mondrian.jpg>
+
 # Tarea 3: editar los diferentes planos de una imagen
 Para esta tarea, se han editado los diferentes planos tanto de una imagen guardada en disco como los fotogramas de un vídeo en vivo tomados desde la webcam del ordenador.
 Con el fin de que dichas modificaciones sean reutilizables y aplicables a diferentes imágenes o fotogramas, se ha realizado una clase para esta tarea, permitiendo aplicar filtros y máscaras de una manera sencilla y cómoda (`Tarea3`).
