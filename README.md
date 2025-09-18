@@ -1,17 +1,17 @@
 # Práctica 1 - Visión por Computador (2025 - 2026)
-# Autores
+## Autores
 - Asmae Ez Zaim Driouch
 - Javier Castilla Moreno
-# Bibliotecas utilizadas
+## Bibliotecas utilizadas
 [![NumPy](https://img.shields.io/badge/NumPy-%23013243?style=for-the-badge&logo=numpy)](https://numpy.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-%23FD8C00?style=for-the-badge&logo=opencv)](https://opencv.org/)
 [![Matplotlib](https://img.shields.io/badge/Matplotlib-%43FF6400?style=for-the-badge&logo=matplotlib&logoColor=white)](https://matplotlib.org/)
-# Cómo usar
-## Primer paso: clonar este repositorio
+## Cómo usar
+### Primer paso: clonar este repositorio
 ```bash
 git clone "https://github.com/Javier-Castilla/VC-P1"
 ```
-## Segundo paso: Activar tu envinroment e instalar dependencias
+### Segundo paso: Activar tu envinroment e instalar dependencias
 > [!NOTE]
 > Todas las dependencias pueden verse en [este archivo](envinronment.yml). Si se desea, puede crearse un entorno de Conda con dicho archivo.
 
@@ -27,13 +27,13 @@ Posteriormente, se activa el entorno:
 conda activate VC_P1
 ```
 
-## Tercer paso: ejecutar el cuaderno
+### Tercer paso: ejecutar el cuaderno
 Finalmente, abriendo nuestro IDE favorito y teniendo instalado todo lo necesario para poder ejecutar notebooks, se puede ejecutar el cuaderno de la práctica [Práctica1.ipynb](Práctica1.ipynb) seleccionando el envinronment anteriormente creado.
 
 > [!IMPORTANT]
 > Todos los bloques de código deben ejecutarse en órden, de lo contrario, podría ocasionar problemas durante la ejecución del cuaderno.
 
-# Tarea 2: Imagen al estilo Mondrian
+## Tarea 2: Imagen al estilo Mondrian
 Se ha generado una imagen al estilo `Mondrian` haciendo uso de las utilidades que presenta la biblioteca `OpenCV`.
 
 Concretamente, se ha tomado como referencia la siguiente imagen:
@@ -68,7 +68,7 @@ La imagen resultante es la siguiente:
 
 <img src=imgs/mondrian.jpg>
 
-# Tarea 3: editar los diferentes planos de una imagen
+## Tarea 3: editar los diferentes planos de una imagen
 Para esta tarea, se han editado los diferentes planos tanto de una imagen guardada en disco como los fotogramas de un vídeo en vivo tomados desde la webcam del ordenador.
 Con el fin de que dichas modificaciones sean reutilizables y aplicables a diferentes imágenes o fotogramas, se ha realizado una clase para esta tarea, permitiendo aplicar filtros y máscaras de una manera sencilla y cómoda (`Tarea3`).
 
@@ -77,7 +77,7 @@ En dicha existen métodos estáticos que permiten invertir los diferentes colore
 - Invertir un canal específico
 - Modificar canales de manera personalizada
 
-## Modificación de los diferentes canales de una imagen leída de disco
+### Modificación de los diferentes canales de una imagen leída de disco
 Para lograr esto, se ha seleccionado una imagen y se ha cargado en memoria desde el disco con el siguiente código:
 
 ```python
@@ -168,7 +168,7 @@ def change_color_percentage(image, r=1, g=1, b=1):
 
 Como se puede observar, se pasan por parámetros tanto la `imagen` como el `porcentaje del valor` que tendrá cada canal en la nueva imagen, `siendo -1 la inversión de dicho canal`.
 
-## Modificación de los diferentes canales de los fotogramas de un vídeo en vivo tomado desde la webcam
+### Modificación de los diferentes canales de los fotogramas de un vídeo en vivo tomado desde la webcam
 Para lograr obtener un vídeo en vivo a través de la webcam, al igual que para leer una imagen de disco, se ha usado la biblioteca `OpenCV`, concretamente el siguiente método:
 
 ```python
@@ -225,7 +225,7 @@ En el código anterior, 27 es el valor `ASCII` asignado a la tecla `ESC`. Si se 
 
 > [!NOTE]
 > Para la modificación de los diferentes canales de cada fotograma, se ha seguido el mismo procedimiento que con la imagen leída de disco, es decir, se ha hecho uso de las utilidades desarrolladas en la clase `Tarea3`.
-# Bibliografía
+## Bibliografía
 - [Repositorio base y enunciado de ésta práctica](https://github.com/otsedom/otsedom.github.io/tree/main/VC/P1)
 - [cv2.minMaxLoc() - OpenCV Documentation](https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7622c466c628a75d9ed008b42250a73f)
 - [Resizing and Rescaling Images with OpenCV](https://opencv.org/blog/resizing-and-rescaling-images-with-opencv/)
