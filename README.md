@@ -225,3 +225,9 @@ En el código anterior, 27 es el valor `ASCII` asignado a la tecla `ESC`. Si se 
 
 > [!NOTE]
 > Para la modificación de los diferentes canales de cada fotograma, se ha seguido el mismo procedimiento que con la imagen leída de disco, es decir, se ha hecho uso de las utilidades desarrolladas en la clase `Tarea3`.
+# Bibliografía
+- [Repositorio base y enunciado de ésta práctica](https://github.com/otsedom/otsedom.github.io/tree/main/VC/P1)
+- [cv2.minMaxLoc() - OpenCV Documentation](https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7622c466c628a75d9ed008b42250a73f)
+- [Resizing and Rescaling Images with OpenCV](https://opencv.org/blog/resizing-and-rescaling-images-with-opencv/)
+- [Numpy sorting and searching Documentation](https://numpy.org/doc/2.1/reference/routines.sort.html)
+- [Numpy indexes](https://numpy.org/doc/2.1/reference/routines.indexing.html)
