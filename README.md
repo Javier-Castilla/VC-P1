@@ -3,9 +3,9 @@
 - Asmae Ez Zaim Driouch
 - Javier Castilla Moreno
 # Bibliotecas utilizadas
-- Numpy
-- OpenCV
-- MatplotLib
+[![NumPy](https://img.shields.io/badge/NumPy-%23013243?style=for-the-badge&logo=numpy)](Link_To_Your_NumPy_Page)
+[![OpenCV](https://img.shields.io/badge/OpenCV-%23FD8C00?style=for-the-badge&logo=opencv)](Link_To_Your_OpenCV_Page)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-%43FF6400?style=for-the-badge&logo=matplotlib&logoColor=white)](Link_To_Your_Matplotlib_Page)
 # Cómo usar
 ## Primer paso: clonar este repositorio
 ```bash
@@ -13,7 +13,7 @@
 ```
 ## Segundo paso: Activar tu envinroment e instalar dependencias
 > [!NOTE]
-> Todas las dependencias pueden verse en [este archivo]().
+> Todas las dependencias pueden verse en [este archivo](envinronment.yml). Si se desea, puede crearse un entorno de Conda con dicho archivo.
 # Tarea 2: Imagen al estilo Mondrian
 Se ha generado una imagen al estilo Mondrian haciendo uso de las utilidades que presenta la biblioteca OpenCV.
 
