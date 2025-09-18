@@ -438,7 +438,7 @@ Resultando en la siguiente imagen:
 <img src="imgs/happy_hamster_pixels.jpg">
 
 > [!NOTE]
-> Si que quisiera usar para detectar dichos píxeles entiempo real en un vídeo tomado con la webcam, bastaría con usar las funciones presentadas anteriormente en cada fotograma.
+> Si se quisiera usar para detectar dichos píxeles entiempo real en un vídeo tomado con la webcam, bastaría con usar las funciones presentadas anteriormente en cada fotograma.
 
 Para ambas versiones se ha detectado que usando el cv2.putText(), cuando el pixel más oscuro o más claro se encuentra en los bordes de la imagen, el texto se muestra fuera de la misma. Por ello se ha utilizado herramientas de IA para generar una función que evite que las etiquetas de texto se salgan de los límites de la imagen ajustando automáticamente su posición:
 
@@ -668,3 +668,4 @@ Para la salida de las imágenes se emplea:
 - [Resizing and Rescaling Images with OpenCV](https://opencv.org/blog/resizing-and-rescaling-images-with-opencv/)
 - [Numpy sorting and searching Documentation](https://numpy.org/doc/2.1/reference/routines.sort.html)
 - [Numpy indexes](https://numpy.org/doc/2.1/reference/routines.indexing.html)
+- [OpenCV Filter2D](https://www.geeksforgeeks.org/python/python-opencv-filter2d-function/)
