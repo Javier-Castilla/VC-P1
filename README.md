@@ -386,6 +386,8 @@ Procesa contínuamente los frames del vídeo y al obtener los valores de intensi
 **Salida del Programa**:
 Pulsando en **ESC** se termina la ejecución y cierra la aplicación
 
+<img src="imgs\px_mas_oscuro_claro.png" width=800 height=800>
+
 
 <h3 align="center">Tarea 4a: Usando las herramientas de numpy</h3>
 
@@ -527,6 +529,8 @@ Como trabajamos con una imagen reducida, debemos escalar las coordenadas de vuel
 3. **Resultado**: Coordenada del centro del bloque 8x8 en la imagen original
 
 Finalmente se emplea marcadores circulares para representar visualmente el área.
+
+<img src="imgs\region_mas_oscura_clara.png" width=800 height=800>
 
 <h3 align="center">Tarea 4b:  Usando máscaras</h3>
 
