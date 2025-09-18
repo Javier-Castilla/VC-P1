@@ -389,6 +389,57 @@ Pulsando en **ESC** se termina la ejecución y cierra la aplicación
 
 <h3 align="center">Tarea 4a: Usando las herramientas de numpy</h3>
 
+Otra manera de realizar esta tarea es utilizando los métodos que nos brinda `numpy`, pues ésta biblioteca almacena los valores de la imagen de forma lineal, y dado que está desarrollada en `C`, los métodos que tiene para buscar valores máximos y mínimos son realmente eficientes y rápidos. Concretamente, se han desarrollado estas funciones para encontrar el píxel más oscuro y más claro respectivamente con ayuda de `numpy`:
+
+```python
+def darkest_pixel_index(image):
+    y, x, *_ = np.unravel_index(np.argmin(image), image.shape)
+    return (x, y)
+```
+
+```python
+def lightest_pixel_index(image):
+    y, x, *_ = np.unravel_index(np.argmax(image), image.shape)
+    return (x, y)
+```
+
+> [!NOTE]
+> Los métodos `np.argmin` y `np.argmax` devuelven el índice lineal con el `valor mínimo (píxel más oscuro)` y `maximo (píxel más claro)` respectivamente. Sin embargo, es necesario obtener las coordenadas de dichos píxeles, por lo que `numpy` cuanta con el método `np.unravel_index`. que nos harán la traspolación.
+
+A continuación, se ha cargado la misma imagen de la `Tarea 3` para detectar en ella el píxel más claro y más oscuro:
+
+```python
+image = cv2.imread("imgs/happy_hamster.jpg", cv2.IMREAD_COLOR_RGB)
+gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+```
+
+> [!NOTE]
+> Nótese el cambio de la imagen a escala de grises para facilitar la detección de dichos píxeles.
+
+Una vez cargada la imagen, se consiguen las coordenadas de ambos píxeles comn las funciones mostradas anteriormente y se dibujan en la misma dichos píxeles unidos por una línea, así como se indica el valor `RGB` de dichos píxeles:
+
+```python
+min_index = darkest_pixel_index(gray)
+max_index = lightest_pixel_index(gray)
+
+val_max = image[max_index[1], max_index[0]].copy()
+val_min = image[min_index[1], min_index[0]].copy()
+
+cv2.circle(image, min_index, 5, (255, 255, 255), -1)
+cv2.circle(image, max_index, 5, (0, 0, 0), -1)
+cv2.line(image, min_index, max_index, (0, 255, 150))
+
+put_text_inside(image, str(val_max), max_index)
+put_text_inside(image, str(val_min), min_index)
+```
+
+Resultando en la siguiente imagen:
+
+<img src="imgs/happy_hamster_pixels.jpg">
+
+> [!NOTE]
+> Si que quisiera usar para detectar dichos píxeles entiempo real en un vídeo tomado con la webcam, bastaría con usar las funciones presentadas anteriormente en cada fotograma.
+
 Para ambas versiones se ha detectado que usando el cv2.putText(), cuando el pixel más oscuro o más claro se encuentra en los bordes de la imagen, el texto se muestra fuera de la misma. Por ello se ha utilizado herramientas de IA para generar una función que evite que las etiquetas de texto se salgan de los límites de la imagen ajustando automáticamente su posición:
 
 ```python
@@ -429,7 +480,6 @@ Para ambas versiones se ha detectado que usando el cv2.putText(), cuando el pixe
 
     cv2.putText(img, text, (x, y), font, scale, color, thickness, cv2.LINE_AA)
 ```
-
 
 <h2 align="center">Tarea 4b: Enconcontrar la zona 8x8 más clara/oscuran</h2>
 
@@ -480,8 +530,64 @@ Finalmente se emplea marcadores circulares para representar visualmente el área
 
 <h3 align="center">Tarea 4b:  Usando máscaras</h3>
 
+Otra forma de lograr esto es aplicar un `kernel` o `máscara` a la imagen con funciones que `OpenCV` nos brinda como puede ser `cv2.filter2D`. Para ello, primero es necesario crea el kernel de la siguiente manera:
+
+```python
+h, w, c = frame.shape
+gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+gray_crop = gray[:(h//block_size)*block_size-block_size,:(w//block_size)*block_size-block_size]
+
+kernel = np.ones((block_size, block_size), dtype=np.float32) / (block_size**2)
+```
+
+Una vez poseído el `kernel`, que no es más que la máscara a aplicar sobre la imagen, se aplica a la misma, obteniendo un promedio donde cada coordenada es el comienzo del bloque 8x8 próximo. Esto nos ayuda a encontrar cuál tiene el mayor y menor promedio, es decir, el `bloque 8x8 más oscuro y más claro de la imagen`.
+
+```python
+avg_map = cv2.filter2D(gray_crop, -1, kernel)
+
+min_idx = np.unravel_index(np.argmin(avg_map), avg_map.shape)
+max_idx = np.unravel_index(np.argmax(avg_map), avg_map.shape)
+```
+Una vez obtenidos los índices estos bloques, simplement se dibujan sobre la imagen o el fotograma como se muestra a continuación:
+
+```python
+cv2.rectangle(frame, (min_idx[1], min_idx[0]), (min_idx[1]+block_size, min_idx[0]+block_size), (0,255,0), 1)
+cv2.rectangle(frame, (max_idx[1], max_idx[0]), (max_idx[1]+block_size, max_idx[0]+block_size), (0,0,255), 1)
+```
+
 <h3 align="center">Tarea 4b:  Usando Fuerza bruta</h3>
 
+La última forma en la que se ha procedido, ha sido realizar nosotros mismos esa máscara. En cierto modo, se trata de una `ventana deslizante` que se ha ido moviendo por toda la imagen encontrando el mayor y menor promedio de la misma. Tras finalizar el recorrido, se obtienen las coordenadas de ambos bloques para posteriormente, dibujarlos en la imagen o fotograma del vídeo:
+
+```python
+h, w, c = frame.shape
+
+    current_max = float('-inf')
+    current_min = float('inf')
+    max_coords = None
+    min_coords = None
+
+    for y in range(0, h - 8, 8):
+        for x in range(0, w - 8, 8):
+            block = frame[y:y+8, x:x+8]
+            value = np.mean(block)
+
+            if value > current_max:
+                current_max = value
+                max_coords = (x, y)
+
+            if value < current_min:
+                current_min = value
+                min_coords = (x, y)
+
+    if min_coords:
+        cv2.rectangle(frame, min_coords, (min_coords[0]+8, min_coords[1]+8), (0,255,0), 2)
+    if max_coords:
+        cv2.rectangle(frame, max_coords, (max_coords[0]+8, max_coords[1]+8), (0,0,255), 2)
+```
+
+> [!NOTE]
+> En los tres casos presentados anteriormente, el resultado es el mismo. La única diferencia es la rapidez con la que se realizan estas búsquedas.
 
 <h2 align="center">Tarea 5: Pop art</h2>
 
