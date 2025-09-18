@@ -3,9 +3,9 @@
 - Asmae Ez Zaim Driouch
 - Javier Castilla Moreno
 # Bibliotecas utilizadas
-[![NumPy](https://img.shields.io/badge/NumPy-%23013243?style=for-the-badge&logo=numpy)](Link_To_Your_NumPy_Page)
-[![OpenCV](https://img.shields.io/badge/OpenCV-%23FD8C00?style=for-the-badge&logo=opencv)](Link_To_Your_OpenCV_Page)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-%43FF6400?style=for-the-badge&logo=matplotlib&logoColor=white)](Link_To_Your_Matplotlib_Page)
+[![NumPy](https://img.shields.io/badge/NumPy-%23013243?style=for-the-badge&logo=numpy)](https://numpy.org/)
+[![OpenCV](https://img.shields.io/badge/OpenCV-%23FD8C00?style=for-the-badge&logo=opencv)](https://opencv.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-%43FF6400?style=for-the-badge&logo=matplotlib&logoColor=white)](https://matplotlib.org/)
 # Cómo usar
 ## Primer paso: clonar este repositorio
 ```bash
@@ -14,6 +14,25 @@
 ## Segundo paso: Activar tu envinroment e instalar dependencias
 > [!NOTE]
 > Todas las dependencias pueden verse en [este archivo](envinronment.yml). Si se desea, puede crearse un entorno de Conda con dicho archivo.
+
+Si se opta por crear un nuevo `Conda envinronment` a partir del archivo expuesto, es necesario abrir el `Anaconda Prompt` y ejecutar lo siguiente:
+
+```bash
+conda env create -f environment.yml
+```
+
+Posteriormente, se activa el entorno:
+
+```bash
+conda activate VC_P1
+```
+
+## Tercer paso: ejecutar el cuaderno
+Finalmente, abriendo nuestro IDE favorito y teniendo instalado todo lo necesario para poder ejecutar notebooks, se puede ejecutar el cuaderno de la práctica [Práctica1.ipynb](Práctica1.ipynb) seleccionando el envinronment anteriormente creado.
+
+> [!IMPORTANT]
+> Todos los bloques de código deben ejecutarse en órden, de lo contrario, podría ocasionar problemas durante la ejecución del cuaderno.
+
 # Tarea 2: Imagen al estilo Mondrian
 Se ha generado una imagen al estilo Mondrian haciendo uso de las utilidades que presenta la biblioteca OpenCV.
 
@@ -25,11 +44,14 @@ La manera de proceder ha sido sencilla, se han guardado en una lista de python l
 
 Una vez guardadas las diferentes coordenadas y colores, se recorre la lista y se dibuja sobre una imagen generada inicialmente en blanco cada rectángulo de la siguiente manera:
 
-```python`
+```python
 for i, rectangle in enumerate(rectangles):
     cv2.rectangle(img, rectangle[0], rectangle[1], rectangle[2], -1)
     cv2.rectangle(img, rectangle[0], rectangle[1], (0, 0, 0), 5)
-``
+```
+
+> [!NOTE]
+> La función `cv2.rectangle` es la encargada de dicujar cada rectángulo pasándole la imagen, las coordenadas de las esquinas superior izquierda e inferior derecha, su color y su ancho, siendo `-1` el valor para rellenar el rectángulo
 
 Posteriormente, se muestra la imagen y se guarda en disco de la siguiente manera:
 
@@ -50,10 +72,11 @@ La imagen resultante es la siguiente:
 Para esta tarea, se han editado los diferentes planos tanto de una imagen guardada en disco como los fotogramas de un vídeo en vivo tomados desde la webcam del ordenador.
 Con el fin de que dichas modificaciones sean reutilizables y aplicables a diferentes imágenes o fotogramas, se ha realizado una clase para esta tarea, permitiendo aplicar filtros y máscaras de una manera sencilla y cómoda (`Tarea3`).
 
-En la clase anterior se observa como existen métodos estáticos que permiten invertir los diferentes colores de una imagen (R, G, B) así como el negativo de la misma o en su defecto, modificar individualmente y de manera personalizada los diferentes canales. En resumen, permite las siguientes operaciones:
+En dicha existen métodos estáticos que permiten invertir los diferentes colores de una imagen (R, G, B) así como el negativo de la misma o en su defecto, modificar individualmente y de manera personalizada los diferentes canales. En resumen, permite las siguientes operaciones:
 - Imagen en negativo
 - Invertir un canal específico
 - Modificar canales de manera personalizada
+
 ## Modificación de los diferentes canales de una imagen leída de disco
 Para lograr esto, se ha seleccionado una imagen y se ha cargado en memoria desde el disco con el siguiente código:
 
@@ -67,7 +90,7 @@ Mostrándose la siguiente imagen:
 
 <img src="imgs/happy_hamster.jpg" width=800 height=800>
 
-A continuación, se han invertido los colores de la imagen haciendo uso de la clase `Tarea3` mostrada anteriormente. A continuación el código de dicho método:
+A continuación, se han invertido los colores de la imagen haciendo uso de la clase `Tarea3` nombrada anteriormente. A continuación el código de dicho método:
 
 ```python
 @staticmethod
@@ -78,7 +101,7 @@ def negative_image(image):
 Simplemente, se resta al valor máximo (255) el valor de cada píxel de la imagen, obteniendo así su complementario. El resultado se muestra con el siguiente código:
 
 ```python
-plt.imshow(img := Tarea3.apply_transformation(image, Tarea3.NEGATIVE))
+plt.imshow(img := Tarea3.apply(image, Tarea3.NEGATIVE))
 plt.show()
 cv2.imwrite("imgs/happy_hamster_negative.jpg", cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 ```
@@ -90,7 +113,7 @@ Y ésta es la imagen resultante:
 Aplicando ésta misma estrategia, se ha invertido el canal verde (G) de la imagen original, resultando en el siguiente código:
 
 ```python
-plt.imshow(img := Tarea3.apply_transformation(image, Tarea3.INVERT_GREEN))
+plt.imshow(img := Tarea3.apply(image, Tarea3.INVERT_GREEN))
 plt.show()
 cv2.imwrite("imgs/happy_hamster_green_negative.jpg", cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 ```
@@ -141,7 +164,7 @@ def change_color_percentage(image, r=1, g=1, b=1):
 Como se puede observar, se pasan por parámetros tanto la imagen como el porcentaje del valor que tendrá cada canal en la nueva imagen, siendo -1 la inversión de dicho canal.
 
 ## Modificación de los diferentes canales de los fotogramas de un vídeo en vivo tomado desde la webcam
-Para lograr obtener un vídeo en vivo a través de la webcam, se ha usado la biblioteca OpenCV, concretamente el siguiente método:
+Para lograr obtener un vídeo en vivo a través de la webcam, al igual que para leer una imagen de disco, se ha usado la biblioteca OpenCV, concretamente el siguiente método:
 
 ```python
 video = cv2.VideoCapture(0)
@@ -149,7 +172,7 @@ video = cv2.VideoCapture(0)
 
 Ésto, con la ayuda de un bucle infinito, permite leer los diferentes fotogramas del vídeo en tiempo real tomado por la webcam.
 
-En este caso, se han añadido controler para cambiar entre la inversión total de canales de los fotogramas o en consecuencia, la inversión de un canal concreto. Los controles son los siguientes:
+En este caso, se han añadido controles para cambiar entre la inversión total de canales de los fotogramas o en consecuencia, la inversión de un canal concreto. Los controles son los siguientes:
 - `1` --> Negativo
 - `2` --> Verde invertido
 - `3` --> Azul invertido
