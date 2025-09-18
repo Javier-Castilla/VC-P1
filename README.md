@@ -9,7 +9,7 @@
 # Cómo usar
 ## Primer paso: clonar este repositorio
 ```bash
-    git clone "https://github.com/Javier-Castilla/VC-P1"
+git clone "https://github.com/Javier-Castilla/VC-P1"
 ```
 ## Segundo paso: Activar tu envinroment e instalar dependencias
 > [!NOTE]
@@ -34,7 +34,7 @@ Finalmente, abriendo nuestro IDE favorito y teniendo instalado todo lo necesario
 > Todos los bloques de código deben ejecutarse en órden, de lo contrario, podría ocasionar problemas durante la ejecución del cuaderno.
 
 # Tarea 2: Imagen al estilo Mondrian
-Se ha generado una imagen al estilo Mondrian haciendo uso de las utilidades que presenta la biblioteca OpenCV.
+Se ha generado una imagen al estilo `Mondrian` haciendo uso de las utilidades que presenta la biblioteca `OpenCV`.
 
 Concretamente, se ha tomado como referencia la siguiente imagen:
 
@@ -62,7 +62,7 @@ cv2.imwrite('imgs/mondrian.jpg', cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 ```
 
 > [!NOTE]
-> Destacar que es necesario pasar la imagen a BGR antes de guardarla en disco haciendo uso de OpenCV para una correcta visualización posterior.
+> Destacar que es necesario pasar la imagen a BGR antes de guardarla en disco haciendo uso de OpenCV para una correcta visualización posterior. Esto seguirá presente a lo largo de la práctica.
 
 La imagen resultante es la siguiente:
 
@@ -90,7 +90,12 @@ Mostrándose la siguiente imagen:
 
 <img src="imgs/happy_hamster.jpg" width=800 height=800>
 
-A continuación, se han invertido los colores de la imagen haciendo uso de la clase `Tarea3` nombrada anteriormente. A continuación el código de dicho método:
+> [!NOTE]
+> La función `cv2.imread` es la encargada de leer la imagen de disco pasadas una ruta y la forma de lectura, que en este caso ha sido lectura en `RGB`, pues originalmente `OpenCV` lee las imágenes en `BGR`.
+
+A continuación, se han invertido los colores de la imagen haciendo uso de la clase `Tarea3` nombrada anteriormente.
+
+Se presenta el código de dicho método:
 
 ```python
 @staticmethod
@@ -98,7 +103,7 @@ def negative_image(image):
     return 255 - image
 ```
 
-Simplemente, se resta al valor máximo (255) el valor de cada píxel de la imagen, obteniendo así su complementario. El resultado se muestra con el siguiente código:
+Simplemente, se resta al `valor máximo (255)` el valor de cada píxel de la imagen, obteniendo así su complementario. El resultado se muestra con el siguiente código:
 
 ```python
 plt.imshow(img := Tarea3.apply(image, Tarea3.NEGATIVE))
@@ -110,7 +115,7 @@ Y ésta es la imagen resultante:
 
 <img src="imgs/happy_hamster_negative.jpg">
 
-Aplicando ésta misma estrategia, se ha invertido el canal verde (G) de la imagen original, resultando en el siguiente código:
+Aplicando ésta misma estrategia, se ha invertido el canal `verde (G)` de la imagen original, resultando en el siguiente código:
 
 ```python
 plt.imshow(img := Tarea3.apply(image, Tarea3.INVERT_GREEN))
@@ -132,12 +137,12 @@ def invert_green(image):
     return image
 ```
 
-En él, se observa como se aplica la misma estrategia inicial, pues se le resta al mñaximo valor (255) el valor de cada píxel en el canal verde (G).
+En él, se observa como se aplica la misma estrategia inicial, pues se le resta al `mñaximo valor (255)` el valor de cada píxel en el `canal verde (G)`.
 
 > [!NOTE]
-> Para invertir el resto de colores se aplica la misma estrategia en el canal deseado.
+> Para invertir el resto de colores se aplica la misma estrategia en el `canal deseado`.
 
-Finalmente, se ha editado de manera aleatoria la imagen original, invirtiendo el canal rojo (R), estableciendo al 12% de su valor original el canal verde (G) y omitiendo completamente el canal azul (B). Para ello se ha hecho uso del siguiente código:
+Finalmente, se ha editado de manera aleatoria la imagen original, `invirtiendo el canal rojo (R)`, estableciendo al `12% de su valor original el canal verde (G)` y `omitiendo completamente el canal azul (B)`. Para ello se ha hecho uso del siguiente código:
 
 ```python
 plt.imshow(img := Tarea3.change_color_percentage(image, -1, 0.12, 0))
@@ -161,22 +166,30 @@ def change_color_percentage(image, r=1, g=1, b=1):
     return image
 ```
 
-Como se puede observar, se pasan por parámetros tanto la imagen como el porcentaje del valor que tendrá cada canal en la nueva imagen, siendo -1 la inversión de dicho canal.
+Como se puede observar, se pasan por parámetros tanto la `imagen` como el `porcentaje del valor` que tendrá cada canal en la nueva imagen, `siendo -1 la inversión de dicho canal`.
 
 ## Modificación de los diferentes canales de los fotogramas de un vídeo en vivo tomado desde la webcam
-Para lograr obtener un vídeo en vivo a través de la webcam, al igual que para leer una imagen de disco, se ha usado la biblioteca OpenCV, concretamente el siguiente método:
+Para lograr obtener un vídeo en vivo a través de la webcam, al igual que para leer una imagen de disco, se ha usado la biblioteca `OpenCV`, concretamente el siguiente método:
 
 ```python
 video = cv2.VideoCapture(0)
 ```
 
-Ésto, con la ayuda de un bucle infinito, permite leer los diferentes fotogramas del vídeo en tiempo real tomado por la webcam.
+Ésto, con la ayuda de un bucle infinito, permite leer los diferentes fotogramas del vídeo en tiempo real tomado por la webcam de la siguiente manera:
+
+```python
+while True:
+    ret, frame = video.read()
+```
+
+> [!NOTE]
+> En la variable `ret`se indica si se ha leído un fotograma, mientras que en `frame` se guarda el fotograma en caso de ser leído correctamente.
 
 En este caso, se han añadido controles para cambiar entre la inversión total de canales de los fotogramas o en consecuencia, la inversión de un canal concreto. Los controles son los siguientes:
-- `1` --> Negativo
-- `2` --> Verde invertido
-- `3` --> Azul invertido
-- `4` --> Rojo invertido
+- `1` -> Negativo
+- `2` -> Verde invertido
+- `3` -> Azul invertido
+- `4` -> Rojo invertido
 
 Al elegir la máscara que queramos aplicar a la imagen, se mostrará en tiempo real, permitiéndo ver el vídeo tomado por la webcam de maneras singulares.
 
@@ -196,3 +209,19 @@ A continuación, se muestra una tabla con las cuatro modificaciones posibles:
         <img src="imgs/video_blue_negative.jpg">
     </td>
 </table>
+
+Para la definición de los controles, se ha usado el siguiente fragmento de código:
+
+```python
+pressed_key = cv2.waitKey(20) & 0xFF
+
+if pressed_key == 27:
+    break
+elif pressed_key in methods_map:
+    current_method = methods_map[pressed_key]
+```
+
+En el código anterior, 27 es el valor `ASCII` asignado a la tecla `ESC`. Si se ha detectado esta tecla, se termina la ejecución. Encambio, si se ha detectado cualquier tecla del `1 al 4`, se aplica al fotograma la modificación de canales correspondiente.
+
+> [!NOTE]
+> Para la modificación de los diferentes canales de cada fotograma, se ha seguido el mismo procedimiento que con la imagen leída de disco, es decir, se ha hecho uso de las utilidades desarrolladas en la clase `Tarea3`.
